@@ -136,7 +136,12 @@ public class DWebView extends WebView {
 
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 JavascriptInterface annotation = method.getAnnotation(JavascriptInterface.class);
-                if (annotation == null) {
+                Method interfaceMethod = getInterfaceMethod(jsb, methodName);
+                JavascriptInterface interfaceMethodAnnotation = null;
+                if (interfaceMethod != null) {
+                    interfaceMethodAnnotation = interfaceMethod.getAnnotation(JavascriptInterface.class);
+                }
+                if (annotation == null && interfaceMethodAnnotation == null) {
                     error = "Method " + methodName + " is not invoked, since  " +
                             "it is not declared with JavascriptInterface annotation! ";
                     PrintDebugInfo(error);
@@ -210,6 +215,26 @@ public class DWebView extends WebView {
          * @return If true, close the current activity, otherwise, do nothing.
          */
         boolean onClose();
+    }
+
+    private Method getInterfaceMethod(Object jsb, String methodName) {
+        Class<?>[] interfaces = jsb.getClass().getInterfaces();
+        if (interfaces == null) {
+            return null;
+        }
+        for (int i = 0; i < interfaces.length; i++) {
+            Method[] declaredMethods = interfaces[i].getDeclaredMethods();
+            if (declaredMethods == null) {
+                continue;
+            }
+            for (int j = 0; j < declaredMethods.length; j++) {
+                String name = declaredMethods[j].getName();
+                if (methodName.equals(name)) {
+                    return declaredMethods[j];
+                }
+            }
+        }
+        return null;
     }
 
 
@@ -313,7 +338,12 @@ public class DWebView extends WebView {
                     if (method != null) {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
                             JavascriptInterface annotation = method.getAnnotation(JavascriptInterface.class);
-                            if (annotation == null) {
+                            Method interfaceMethod = getInterfaceMethod(jsb, methodName);
+                            JavascriptInterface interfaceMethodAnnotation = null;
+                            if (interfaceMethod != null) {
+                                interfaceMethodAnnotation = interfaceMethod.getAnnotation(JavascriptInterface.class);
+                            }
+                            if (annotation == null && interfaceMethodAnnotation == null) {
                                 return false;
                             }
                         }

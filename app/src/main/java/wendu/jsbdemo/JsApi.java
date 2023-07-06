@@ -12,23 +12,22 @@ import wendu.dsbridge.CompletionHandler;
  * Created by du on 16/12/31.
  */
 
-public class JsApi{
-    @JavascriptInterface
+public class JsApi implements IJsApi{
+    @Override
     public String testSyn(Object msg)  {
         return msg + "［syn call］";
     }
-
-    @JavascriptInterface
+    @Override
     public void testAsyn(Object msg, CompletionHandler<String> handler){
         handler.complete(msg+" [ asyn call]");
     }
 
-    @JavascriptInterface
+    @Override
     public String testNoArgSyn(Object arg) throws JSONException {
         return  "testNoArgSyn called [ syn call]";
     }
 
-    @JavascriptInterface
+    @Override
     public void testNoArgAsyn(Object arg,CompletionHandler<String> handler) {
         handler.complete( "testNoArgAsyn   called [ asyn call]");
     }
@@ -41,7 +40,7 @@ public class JsApi{
         return jsonObject.getString("msg") + "[ never call]";
     }
 
-    @JavascriptInterface
+    @Override
     public void callProgress(Object args, final CompletionHandler<Integer> handler) {
 
         new CountDownTimer(11000, 1000) {

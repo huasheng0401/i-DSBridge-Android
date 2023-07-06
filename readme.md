@@ -11,7 +11,7 @@
 ![](https://img.shields.io/badge/minSdkVersion-11-yellow.svg)
 [![x5](https://img.shields.io/badge/support%20x5-yes-blue.svg)](https://github.com/wendux/DSBridge-Android/tree/x5-3.0)
 
->Modern cross-platform JavaScript bridge, through which you can invoke each other's functions synchronously or asynchronously between JavaScript and native applications.
+>Modern cross-platform JavaScript bridge, through **which** you can invoke each other's functions synchronously or asynchronously between JavaScript and native applications.
 
 Chinese documentation [中文文档](https://github.com/wendux/DSBridge-Android/blob/master/readme-chs.md)       
 DSBridge-IOS：https://github.com/wendux/DSBridge-IOS       
