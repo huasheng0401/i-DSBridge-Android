@@ -70,15 +70,26 @@ To use  dsBridge in your own project:
 1. Implement APIs in a Java class 
 
    ```java
-   public class JsApi{
-       //for synchronous invocation
+   public interface IJsApi {
+
        @JavascriptInterface
+       public String testSyn(Object msg);
+
+       @JavascriptInterface
+       public void testAsyn(Object msg, CompletionHandler<String> handler);
+   }
+   ```
+
+   ```java
+   public class JsApi implements IJsApi{
+       //for synchronous invocation
+       @Override
        public String testSyn(Object msg)  {
            return msg + "［syn call］";
        }
 
        //for asynchronous invocation
-       @JavascriptInterface
+       @Override
        public void testAsyn(Object msg, CompletionHandler handler) {
            handler.complete(msg+" [ asyn call]");
        }
